@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="camuLoginApp">
+	<head>
+		<meta charset="utf-8">
+        <meta name="description" content="Digital Campus: Camu is an advanced online learning platform and campus management solution offering SIS, LMS, Virtual Classroom, Online Examinations and much more for any Curriculum such as Outcome-Based Education(OBE) and Choice Based Credit System(CBCS) and More.">
+        <link rel="icon" href="assets/img/faviconv2.png" type="image/x-icon">
+        <title>Login Page - Camu</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+		<!-- jQuery library -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<!-- Latest compiled JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Manrope">
+		<link href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.min.css" rel="stylesheet">
+		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    	<!-- required inline css should not be moved to external resource -->
+    	<style>
+            /*used to hide and show views after rendering*/
+            .hide-halfcooked-views{
+	            visibility: hidden;
+	            opacity: 0;
+	            transition: visibility 0s, opacity 0.5s linear;
+            }
+            .show-fullcooked-views{
+            	visibility: visible !important;
+            	opacity: 1 !important;
+            }
+            /*loading bar css*/
+            .login-loading-container{
+                position: fixed;
+                z-index: 999;
+                height: 2em;
+                width: 2em;
+                overflow: show;
+                margin: auto;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                right: 0;
+            }
+        	.lds-roller {
+	            display: inline-block;
+	            position: relative;
+	            width: 64px;
+	            height: 64px;
+        	}
+        	.lds-roller div {
+        		animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+        		transform-origin: 32px 32px;
+        	}
+        	.lds-roller div:after {
+	            content: " ";
+	            display: block;
+	            position: absolute;
+	            width: 6px;
+	            height: 6px;
+	            border-radius: 50%;
+	            background: #0D9BE1;
+	            margin: -3px 0 0 -3px;
+        	}
+        	.lds-roller div:nth-child(1) {
+        		animation-delay: -0.036s;
+        	}
+        	.lds-roller div:nth-child(1):after {
+        		top: 50px;
+        		left: 50px;
+        	}
+        	.lds-roller div:nth-child(2) {
+        		animation-delay: -0.072s;
+        	}
+        	.lds-roller div:nth-child(2):after {
+	            top: 54px;
+	            left: 45px;
+        	}
+        	.lds-roller div:nth-child(3) {
+        		animation-delay: -0.108s;
+        	}
+        	.lds-roller div:nth-child(3):after {
+        		top: 57px;
+        		left: 39px;
+        	}
+        	.lds-roller div:nth-child(4) {
+        		animation-delay: -0.144s;
+        	}
+        	.lds-roller div:nth-child(4):after {
+        		top: 58px;
+        		left: 32px;
+        	}
+        	.lds-roller div:nth-child(5) {
+        		animation-delay: -0.18s;
+        	}
+        	.lds-roller div:nth-child(5):after {
+        		top: 57px;
+        		left: 25px;
+        	}
+        	.lds-roller div:nth-child(6) {
+        		animation-delay: -0.216s;
+        	}
+    		.lds-roller div:nth-child(6):after {
+        		top: 54px;
+        		left: 19px;
+        	}
+        	.lds-roller div:nth-child(7) {
+        		animation-delay: -0.252s;
+        	}
+        	.lds-roller div:nth-child(7):after {
+	            top: 50px;
+	            left: 14px;
+        	}
+        	.lds-roller div:nth-child(8) {
+        		animation-delay: -0.288s;
+        	}
+        	.lds-roller div:nth-child(8):after {
+	            top: 45px;
+	            left: 10px;
+        	}
+        	@keyframes lds-roller {
+            	0% {
+                	transform: rotate(0deg);
+            	}
+            	100% {
+                	transform: rotate(360deg);
+            	}
+        	}
+        	/*loading bar ends*/
+        	.login-container_camu {
+			    background-color: #fafbfc;
+			    min-height: 100vh;
+			    font-family: 'Manrope';
+			    font-weight: normal;
+			}
+			.login-details {
+				height: 100%;
+ 			}
+			.product-details {
+			    display: flex;
+			    align-items: center;
+			    justify-content: space-between;
+				background-color: #FAFBFC;
+				padding:24px;
+			}
+			.account-cont_label {
+			    font-size: 14px;
+			    color: #091e42;
+			    margin: 0 12px 0 0;
+			    cursor: pointer;
+			}
+			.account-create_btn{
+			    border: solid 2px #dfe1e5;
+			    background-color: #f5f6f7;
+			    color: #495973;
+			    border-radius: 20px;
+			    font-size: 14px;
+			    font-weight: 600;
+			    padding: 8px 16px;
+			    outline: none;
+			}
+			.product-login {
+			    display: flex;
+			    align-items: center;
+			}
+			.wave-img {
+			    margin-top: 34px;
+			}
+			.wave-img img {
+			    width: 100%;
+			}
+			.account-cont {
+			  padding: 16px 0;
+				background-repeat: no-repeat;
+				width: 100%;
+				height: 100%;
+				background-position: center;
+				background-size: cover;
+				/* background-size: 100% 100%; */
+				min-height: calc(100vh - 88px);
+
+			}
+			.login-banner_block{
+				margin: 0 32%;
+			    padding: 24px 34px;
+				background-color: #ffffff;
+				border-radius: 24px;
+				box-shadow: 0px 0px 1px 0px #091E4240;
+
+			}
+			.details-input_box {
+			    padding-top: 18px;
+			}
+			.input-box_cont {
+			    margin-bottom: 20px;
+			}
+			.password-user_cont{
+			    position: relative;
+			}
+			.password-view{
+			    position: absolute;
+			    right: 10px;
+			    top: 33px;
+			    cursor: pointer;
+			}
+			.login-btn_group {
+			    padding: 20px 0 0;
+			}
+			.user-account_cont {
+			    margin: 28px 0;
+			}
+			.user-account_down {
+			    margin: 12px 0;
+			}
+			.check-login{
+			    width: 18px;
+			    height: 18px;
+			}
+			.chat-user_cont {
+			    position: absolute;
+			    bottom: 20% ;
+			    right: 10%;
+			    cursor: pointer;
+			}
+			.login-date_selection {
+			    display: flex;
+			    margin-top: 12px;
+			}
+			.login-start_date {
+			    margin-right: 12px;
+			}
+			.login-banner {
+			    background-color: #E2F3FB;
+			    height: 100%;
+			}
+			.product-content {
+			    padding: 0 40px;
+			    padding-top: 32px;
+			}
+			.banner-img_view{
+			    margin-top: 20%;
+			}
+			.banner-img_view img {
+			    width: 100%;
+			}
+			.camu-app_login{
+			    position: absolute;
+				width: 100%;
+				top: 0;
+				margin-top: 86vh;
+			}
+			.camu-cont_label{
+			    color: #091E42;
+			    font-size: 16px;
+			    text-align: center;
+			    margin: 0;
+			    font-weight: 600;
+			    padding-bottom: 12px;
+			}
+			.product-content_label {
+			    color: #091E42;
+			    font-size: 24px;
+			    font-weight: 600;
+			}
+			.product-more_label {
+			    color: #0D9BE1;
+			    font-size: 14px;
+			    font-weight: 600;
+			}
+			.product-more_label a{
+			    color: #0D9BE1;
+			}
+			.account-create_label {
+			    font-size: 20px;
+			    color: #091E42;
+			    font-weight: 700;
+			    margin: 0;
+			    text-align: center;
+			    border-bottom: 1px solid #DFE1E5;
+			    padding-bottom: 16px;
+			}
+			input:focus,textarea {
+			    outline: none !important;
+			}
+			.input-label_cont {
+			    font-size: 14px;
+			    color: #495973;
+			    margin: 0;
+			    padding-bottom: 4px;
+			}
+			.input-form_cont {
+			    border: solid 2px #dfe1e5 !important;
+			    height: 40px !important;
+			    border-radius: 4px !important;
+			    box-shadow: none !important;
+			}
+			.input-form_cont:focus {
+			    outline: none !important;
+			    box-shadow: none !important;
+			}
+			.password-form_cont {
+			    border: solid 2px #dfe1e5 !important;
+			    height: 40px !important;
+			    border-radius: 4px !important;
+			    padding-right: 40px !important;
+			    box-shadow: none !important;
+			}
+			.password-form_cont:focus {
+			    outline: none !important;
+			    box-shadow: none !important;
+			}
+			.keep-sign {
+			    display: flex;
+			    justify-content: end;
+			    align-items: center;
+			}
+			.forget-password {
+			    color: #0D9BE1;
+			    font-size: 14px;
+			    font-weight: 600;
+			    cursor: pointer;
+			    margin: 0;
+			}
+			.forget-password a {
+			    color: #0D9BE1;
+			}
+			.keep-login {
+			    color: #091E42;
+			    font-size: 14px;
+			    padding-left: 8px;
+			    position: relative;
+			    top: -4px;
+			    font-weight: 400;
+			}
+			.login-btn {
+			    background-color: #2d9be1;
+			    color: #ffffff;
+			    border-radius: 20px;
+			    width: 100%;
+			    font-size: 14px;
+			    font-weight: 600;
+			    padding: 10px 16px;
+			    outline: none;
+			    border: 0;
+			}
+			.login-btn:hover{
+				background-color: #1D98D4;
+			}
+			.login-btn:active{
+				background-color: #1D98D4;
+				border: solid 2px #006FAC;
+			}
+			.more-login_label {
+			    width: 100%;
+			    text-align: center;
+			    border-bottom: 1px solid #dfe1e5;
+			    line-height: 0.1em;
+			    margin: 0;
+			}
+			.more-login_label span {
+			    background-color: #fafbfc;
+			    padding: 0 8px;
+			    font-size: 14px;
+			    color: #000000;
+			}
+			.google_svg {
+			    width: 22px;
+			    height: 22px;
+			    vertical-align: top;
+			    margin-right: 6px;
+			}
+			.social-login_btn {
+			    border: solid 2px #dfe1e5;
+			    background-color: #f5f6f7;
+			    color: #091E42;
+			    border-radius: 30px;
+			    font-size: 14px;
+			    font-weight: 600;
+			    padding: 10px 16px;
+			    outline: none;
+			    width: 100%;
+			    margin-bottom: 12px;
+			}
+			.social-login_btn:hover{
+             background-color: #EBEDF0;
+			}
+			.social-login_btn:active{
+			 border: solid 2px #091E42A3;
+			 background-color: #EBEDF0;
+			}
+			.enterprise-login {
+			    margin: 0 auto;
+			    cursor: pointer;
+			    text-align: center;
+			    color: #0D9BE1;
+			    font-size: 14px;
+			    font-weight: 600;
+			    width: fit-content;
+			}
+			.enterprise-login span {
+			    position: relative;
+			    top: -5px;
+			    left: 10px;
+			}
+
+			.terms-cont_label {
+			    font-size: 13px;
+			    margin: 0;
+			    color: #495973;
+			    text-align: center;
+			    padding-top: 12px;
+			}
+			.terms-cont_label span {
+			    color: #0D9BE1;
+			    text-decoration: underline;
+				padding: 0 6px;
+			}
+			.rights-cont_label {
+			    font-size: 13px;
+			    margin: 0;
+			    color: #7F8A9D;
+			    text-align: center;
+			    padding-top: 8px;
+			}
+			.app-login{
+			    display: flex;
+			    justify-content: center;
+			}
+			.app-user_btn{
+			    display: flex;
+			    width: fit-content;
+			    align-items: center;
+			    cursor: pointer;
+				padding: 0 8px;
+			}
+			.android-user_label{
+			    margin-left: 8px;
+			}
+			.app-label_small{
+			    margin: 0;
+			    color: #ffffff;
+			    font-size: 9px;
+			}
+			.app-label_normal{
+			    margin: 0;
+			    color: #ffffff;
+			    font-size: 14px;
+			}
+			.warning-error_cont{
+				display: inline-flex;
+			    background-color: #fef1f3;
+			    padding: 4px;
+			    border-radius: 8px;
+				width: 100%;
+				margin-top: 12px;
+			}
+			.warning-error_reset{
+				display: inline-flex;
+			    background-color: #fef1f3;
+			    padding: 4px;
+			    border-radius: 8px;
+				width: 100%;
+				margin-top: 0px;
+				margin-bottom: 20px;
+			}
+			.warning-error_label{
+				margin: 0;
+			    font-size: 13px;
+			    color: #F24B6B;
+			    padding-left: 8px;
+				position: relative;
+			    top: 4px;
+			}
+			.warning-error_input{
+				display: inline-flex;
+				margin: 0;
+			    font-size: 13px;
+			    color: #F24B6B;
+			    position: relative;
+			    top: 4px;
+			}
+			.warning-error_input {
+				animation: shake 800ms 0.5 linear;
+				-moz-animation: shake 800ms 0.5 linear;
+				-webkit-animation: shake 800ms 0.5 linear;
+				-o-animation: shake 800ms 0.5 linear;
+	     	}
+			.mainblock {
+				overflow: hidden!important;
+				visibility: hidden;
+				position: fixed;
+				z-index: -5;
+			}
+			.mainblock.visible{
+				visibility:visible;
+				position:relative;
+				z-index:auto;
+			}
+			.forget-password_container{
+				padding: 48px 84px;
+			}
+			.reset-password_label{
+				color: #091E42;
+				margin: 0;
+				font-size: 24px;
+				font-weight: 600;
+			}
+			.password-label{
+				text-align: center;
+			   border-bottom: solid 1px #dfe1e5;
+			   margin-bottom: 24px;
+			}
+			.password-view_cont{
+				width: 40%;
+			    margin: 0 auto;
+			    padding-top: 90px;
+			}
+			.email-reset_label{
+				font-size: 13px;
+			    color: #7F8A9D;
+			    padding: 8px 0 24px 0;
+				margin: 0;
+			}
+			.option-view_label{
+				color: #0D9BE1;
+			    margin: 20px 0 0;
+				font-size: 14px;
+				font-weight: 600;	
+				cursor: pointer;
+				padding: 10px 20px;
+                border-radius: 30px;
+				text-align: center;
+			}
+			.option-view_label:hover{
+                background-color:#E2F3FB;
+			} 
+			
+			.option-view_label span{
+				margin-right: 10px;
+				position: relative;
+				top: 4px;
+			}
+			.option-view_label:hover{
+				background-color: #E2F3FB;
+			}
+			.email-sent_container{
+				padding: 48px 84px;
+			}
+			.email-reset_label span {
+			    color: #0D9BE1;
+			    text-decoration: underline;
+				padding: 0 6px;
+			}
+			.camu_link_url {
+				color: #7F8A9D;
+    			text-decoration: underline;
+			}
+			/* .account-cont {
+		        margin: 0 25%;
+		        padding-top: 34px;
+	        } */
+			.institution-select_container {
+		      margin: 0 25%;
+		      padding-top: 34px;
+	        }
+			.ui-autocomplete {
+				max-width: 495px !important;
+				max-height: 300px !important;
+				overflow: auto;
+				border: solid 1px rgb(207, 207, 207) !important;
+				padding: 0 10px !important;
+
+				}
+				.ui-menu-item{
+				font-size: 14px !important;
+				padding: 6px 0 !important;
+				}
+               .ui-widget-content{
+				color: #495973 !important;
+				font-size: 14px !important;
+			   }
+				.ui-menu .ui-menu-item a {
+				color: #495973 !important;
+				font-size: 14px !important;
+				}
+				.ui-menu-item a.ui-state-focus {
+				background: #E2F3FB !important;
+				color: #0D9BE1 !important;
+				border: none !important;
+				}
+				.ui-menu .ui-menu-item:hover {
+				background: #E2F3FB !important;
+				color: #0D9BE1 !important;
+				border: none !important;
+				}
+			   .ui-menu .ui-menu-item-wrapper:hover{
+				background: #E2F3FB !important;
+				color: #0D9BE1 !important;
+				border: none !important;
+                }
+				.ui-autocomplete::-webkit-scrollbar {
+				width: 8px;
+				}
+
+				.ui-autocomplete::-webkit-scrollbar-track {
+				box-shadow: inset 0 0 5px grey; 
+				border-radius: 10px;
+				}
+				/* Handle */
+				.ui-autocomplete::-webkit-scrollbar-thumb {
+				background: #b9b9b9; 
+				border-radius: 10px;
+				}
+
+				/* Handle on hover */
+				.ui-autocomplete::-webkit-scrollbar-thumb:hover {
+				background: #aaaaaa; 
+				}
+
+			@media only screen and (min-width: 320px) and (max-width: 767px){ 
+			    .left-banner{
+			        display: none;
+			    }
+			    .login-details {
+			        padding: 0;
+			    }
+				.product-details{
+					padding: 16px ;
+				}
+
+			    .account-cont {
+					margin: 0;
+					padding: 0;
+					background-image: none !important;
+					background-color: #ffffff;
+			    }
+			    .chat-user_cont{
+			        position: absolute;
+			        bottom: 20px;
+			        right: 14px;
+			        cursor: pointer;
+			    }
+				.product-logo{
+					margin: 0 auto;
+				}
+			    .product-logo_img{
+			        margin: 0 auto;
+			        display: block;
+			    }
+			    .wave-img {
+			        display: none;
+			    }
+			    .account-cont_label{
+			        display: none;
+			    }
+			    .chat-user_cont svg{
+			        width: 48px;
+			        height: 48px;
+			    }
+			    .password-view_cont{
+					width: 100%;
+				    margin: 0 auto;
+				    padding-top: 40px;
+				}
+				.forget-password_container{
+					padding:  40px 24px;
+				}
+				.email-sent_container{
+					padding:  40px 24px;
+				}
+			
+				.institution-select_container {
+			      margin: 0;
+			      padding-top: 26px;
+		        }
+				.loggin-banner-box {
+			     display: block !important;
+		
+		        }
+				.ui-autocomplete {
+				max-width:300px !important;
+				max-height: 300px !important;
+				}
+				.login-banner_block {
+					margin: 0;
+					padding: 24px;
+					background-color: #ffffff;
+					border-radius: 0;
+					box-shadow: none;
+				}
+
+			}
+			@media only screen and (min-width: 768px) and (max-width: 991px){ 
+			    .left-banner{
+			        display: none;
+			    }
+			    .login-details {
+			        /* padding: 30px 28px; */
+			    }
+			    .account-cont {
+			        /* margin: 0 14% ;
+			        padding-top: 38px; */
+			    }
+			    .wave-img {
+			        display: none;
+			    }
+			    .chat-user_cont {
+			        position: absolute;
+			        bottom: 20%;
+			        right: 5%;
+			        cursor: pointer;
+			    }
+			    .loggin-banner-box {
+			    	display: flex;
+			    	flex-wrap: wrap;
+			    }
+			    .password-view_cont{
+					width: 86%;
+					margin: 0 auto;
+					padding-top: 90px;
+				}
+				.account-cont {
+			      /* margin: 0 14%;
+			      padding-top: 38px; */
+		        }
+				.login-banner_block {
+					margin: 0 20%;
+                    padding: 24px;
+				}
+				.institution-select_container {
+			      margin: 0 14%;
+			      padding-top: 38px;
+		         }
+			}
+			.institution-name_label {
+				font-size: 16px;
+				color: #091E42;
+				margin: 0;
+				text-align: center;
+				padding-top: 8px;
+			}
+
+			.institution-back_view {
+				font-size: 14px;
+				color: #0D9BE1;
+				margin: 0 auto;
+				padding: 8px 0 16px;
+				cursor: pointer;
+				font-weight: 600;
+				width: fit-content;
+				text-align: center;
+			}
+
+			.inst-logo_img {
+				margin: 0 auto;
+				display: block;
+				max-width: 150px;
+			}
+			.institution-name_info{
+				background-color:#def3fb;
+				border-radius: 8px;
+				padding: 4px 8px;
+				margin-top: 8px;
+			}
+			.institution-info_label{
+				color: #006FAC;
+                font-size: 13px;
+				margin: 0;
+				line-height: 20px;
+				
+			}
+			
+    	</style>
+    	<meta name="description" content="User login page">
+    	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    	<!-- <link rel="stylesheet" href="assets/css/login_vendor.min.css?v=15917"> -->
+    	<link rel="stylesheet" href="../../app/assets/css/camu.css">
+	</head>
+    <body ng-controller="LoginCtrl">
+        <div class="login-container_camu hide-halfcooked-views" id="camuLoginContainer">
+    		<div id="login-box" class="row no_margin loggin-banner-box mainblock visible" style="display: flex;flex-wrap: wrap;min-height: 100vh;">
+                <!-- <div class="col-3 col-sm-0 col-md-3  col-lg-3 no_pad left-banner">
+                    <div class="login-banner">
+                        <div class="product-content">
+	                        <p class="product-content_label">The Era of Exam and Result Management System</p>
+	                        <p class="product-more_label"><a href="https://camudigitalcampus.com/guide/the-era-of-exam-and-result-management-system" target="_blank">Learn more</a></p>
+                        </div>
+                        <div class="banner-img_view">
+                        	<img src="assets/img/viewbanner.png" alt="banner-logo">
+                        </div>
+                        <div class="camu-app_login">
+                            <p class="camu-cont_label">Get Camu app</p>
+                           	<div class="app-login">
+                                <div class="app-user_btn">
+                                	<a href="https://play.google.com/store/apps/details?id=com.octoze.camuapp" target="_blank"><img src="assets/img/android.png" alt="android-logo"></a>
+                                </div>
+                                <div class="app-user_btn">
+                                	<a href="https://apps.apple.com/in/app/camu-staff-app/id979061549" target="_blank"><img src="assets/img/IOS.png" alt="ios-logo"></a>
+
+                                </div>
+                        	</div>
+                        </div>
+                    </div>
+                </div> -->
+                <div class="col-12 col-md-12 col-sm-12 col-lg-12 no_pad">
+                    <div class="login-details">
+                        <div class="product-details">
+	                        <div class="product-logo">
+	                        	<img src="assets/img/camulogov2.png" alt="product-logo" class="product-logo_img">
+	                        </div>
+	                        <!-- <div class="product-login">
+	                            <p class="account-cont_label">New to Camu?</p>
+	                            <button class="account-create_btn">Create an  account</button>
+	                        </div> -->
+                        </div>
+                        <!-- <div class="wave-img">
+	                        <svg width="100%" height="60" viewBox="0 0 810 82" fill="none" xmlns="http://www.w3.org/2000/svg">
+	                            <g opacity="0.5">
+	                                <path d="M1 27.2597C6.78002 22.9416 27.423 20.8823 63.7545 47.1892C109.169 80.0728 228.28 94.2461 222.5 22.5C217.215 -2.61115 184.86 -1.13986 176.465 4.34075C170.685 8.32664 162.593 21.5797 176.465 42.705C193.805 69.1116 216.512 115.946 324.268 38.2209C432.024 -39.5041 615.334 68.1151 663.225 66.1221C701.539 64.5278 755.706 43.5354 778 33.2385" stroke="#008FD5" stroke-dasharray="3 5"/>
+	                                <path d="M776.923 13.5389L764 21L786.416 28.9856L782 52.1769L794.923 44.7158L800.775 20.6955L776.923 13.5389Z" fill="#008FD5"/>
+	                            </g>
+	                        </svg>
+                        </div> -->
+						<!-- ...................institution select container..................... -->
+						<div class="account-cont" ng-if="showInstSearch || instSearchError" ng-style="{&apos;background-image&apos;: instData.bgURL ? &apos;url(&apos; + instData.bgURL + &apos;)&apos; : &apos;url(&apos; + &apos;assets/img/LoginBG.jpg&apos; + &apos;)&apos; }">
+							<div class="login-banner_block">
+							<p class="account-create_label">{{"SELECT_YOUR_INSTITUTION"|translate}}</p>
+							<form autocomplete="off" name="loginForm" id="loginForm">
+								<div class="details-input_box">
+									<div class="input-box_cont">
+										<div class="form-group">
+											<label for="username" class="input-label_cont">{{"INSTITUTION"|translate}}</label>
+											<input type="text" id="loginFormInstSearch" name="loginFormInstSearch" ng-model="loginForm.InId" cx-autocomplete="searchInstituions" autofor="Inst" class="input-form_cont form-control" callback="onInstituteSelection" placeholder="{{&quot;TYPE_YOUR_INSTITUTION_NAME&quot;|translate}}">
+											<div class="warning-error">
+												<div class="warning-error_cont" ng-if="instSearchError">
+													<svg width="28" height="28" viewBox="0 0 12 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+														<path d="M3.93 5H8.07L11 7.93V12.07L8.07 15H3.93L1 12.07V7.93L3.93 5Z" stroke="#F24B6B" stroke-linecap="round" stroke-linejoin="round"></path>
+														<path d="M6 8V10" stroke="#F24B6B" stroke-linecap="round" stroke-linejoin="round"></path>
+														<path d="M6 12H6.00596" stroke="#F24B6B" stroke-linecap="round" stroke-linejoin="round"></path>
+													</svg>
+													<p class="warning-error_label" style="word-break:break-word !important;">
+														{{instSearchError}}
+													</p>
+												</div>
+											</div>
+											<div class="institution-name_info">
+												<p class="institution-info_label">{{"PLEASE_TYPE_YOUR_INSTITUTION_NAME_TO_SEARCH._YOU_CAN_TYPE_THE_FIRST_3_LETTERS_OF_YOUR_INSTITUTION_TO_SEE_THE_LIST."|translate}}</p>
+											</div>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+						</div>
+						<!-- ......................................................................... -->
+                        <div class="account-cont" ng-show="showLoginForm" ng-style="{&apos;background-image&apos;: instData.bgURL ? &apos;url(&apos; + instData.bgURL + &apos;)&apos; : &apos;url(&apos; + &apos;assets/img/LoginBG.jpg&apos; + &apos;)&apos; }">
+							<div class="login-banner_block">
+							<div class="institution-details_cont" ng-if="instData.insNm">
+								<img src="{{instData.insLgo}}" alt="inst-img" class="inst-logo_img" ng-if="instData.insLgo">
+								<span>
+									<!-- <p class="institution-name_label">{{instData.insCd}} - {{instData.insNm}}</p> -->
+									<p class="institution-name_label">{{instData.insNm}}</p>
+									<p class="institution-back_view" ng-click="goBackToMainDomain()">
+										<span>{{"NOT_FROM"|translate}}</span> 
+										<span>{{instData.insNm}}?</span>
+									</p>
+								</span>
+							</div>
+                        	<p class="account-create_label">{{"LOGIN_TO_CAMU"|translate}}</p>
+                        	<form autocomplete="off" name="loginForm" id="loginForm">
+	                        	<div class="details-input_box">
+		                            <div class="input-box_cont">
+		                                <div class="form-group">
+		                                    <label for="username" class="input-label_cont">{{"USER_NAME"|translate}}</label>
+		                                    <input id="uname" type="text" name="name" class="input-form_cont form-control" ng-model="login.name" ng-change="clearError()" required="required" autofocus>
+		                                    <div class="warning-error_input" ng-show="loginForm.name.$dirty &amp;&amp; loginForm.name.$error.required">
+		                                    	<svg width="28" height="28" viewBox="0 0 12 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+													<path d="M3.93 5H8.07L11 7.93V12.07L8.07 15H3.93L1 12.07V7.93L3.93 5Z" stroke="#F24B6B" stroke-linecap="round" stroke-linejoin="round"></path>
+													<path d="M6 8V10" stroke="#F24B6B" stroke-linecap="round" stroke-linejoin="round"></path>
+													<path d="M6 12H6.00596" stroke="#F24B6B" stroke-linecap="round" stroke-linejoin="round"></path>
+												</svg>
+												<p class="warning-error_label">{{"USERNAME_REQUIRED!"|translate}}</p>
+											</div>
+		                                </div>
+		                            </div>
+		                            <div class="input-box_cont password-user_cont">
+		                                <div class="form-group">
+		                                    <label for="password" class="input-label_cont">{{"PASSWORD"|translate}}</label>
+		                                    <input type="password" class="password-form_cont form-control " id="pwd" name="password" ng-model="login.pwd" ng-change="clearError()" required="required">
+		                                    <div class="warning-error_input" ng-show="loginForm.password.$dirty &amp;&amp; loginForm.password.$error.required">
+		                                    	<svg width="28" height="28" viewBox="0 0 12 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+													<path d="M3.93 5H8.07L11 7.93V12.07L8.07 15H3.93L1 12.07V7.93L3.93 5Z" stroke="#F24B6B" stroke-linecap="round" stroke-linejoin="round"></path>
+													<path d="M6 8V10" stroke="#F24B6B" stroke-linecap="round" stroke-linejoin="round"></path>
+													<path d="M6 12H6.00596" stroke="#F24B6B" stroke-linecap="round" stroke-linejoin="round"></path>
+												</svg>
+												<p class="warning-error_label">{{"PASSWORD_REQUIRED."|translate}}</p>
+											</div>
+		                                    <div class="password-view">
+		                                    	<div id="password_show" class="toggle-password visible" onclick="show_hide_password(&apos;show&apos;);">
+		                                    		<svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+				                                    	<path d="M1 12C1 12 5 4 12 4C19 4 23 12 23 12C23 12 19 20 12 20C5 20 1 12 1 12Z" stroke="#495973" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+				                                    	<path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z" stroke="#495973" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+		                                    		</svg>
+		                                    	</div>
+		                                    	<div id="password_hide" class="toggle-password hidden" onclick="show_hide_password(&apos;hide&apos;);">
+		                                    		<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye-off"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" stroke="#495973"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+		                                    	</div>
+		                                    </div>
+		                                </div>
+		                            </div>
+	                        	</div>
+	                        <div class="keep-sign">
+	                            <!-- <div class="checkbox_cont">
+	                                <label><input type="checkbox" value="" class="check-login" /><span class="keep-login">Keep me logged in</span></label>
+	                            </div> -->
+	                            <p class="forget-password">
+	                            	<a href="#" onclick="show_box(&apos;forgot-box&apos;); return false;" ng-click="clearError()">{{"FORGOT_PASSWORD?"|translate}}</a>
+	                        	</p>
+	                        </div>
+	                        <div class="warning-error" ng-show="login.error">
+                             	<div class="warning-error_cont">
+                             		<svg width="28" height="28" viewBox="0 0 12 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+										<path d="M3.93 5H8.07L11 7.93V12.07L8.07 15H3.93L1 12.07V7.93L3.93 5Z" stroke="#F24B6B" stroke-linecap="round" stroke-linejoin="round"></path>
+										<path d="M6 8V10" stroke="#F24B6B" stroke-linecap="round" stroke-linejoin="round"></path>
+										<path d="M6 12H6.00596" stroke="#F24B6B" stroke-linecap="round" stroke-linejoin="round"></path>
+									</svg>
+									<p class="warning-error_label" style="word-break:break-word !important;">{{login.error}}</p>
+								</div>
+                            </div>
+	                        <div class="login-btn_group">
+	                            <button type="submit" value="" class="login-btn" ng-click="doLogin()">{{"LOGIN"|translate}}</button>
+	                            <div class="user-account_cont">
+	                                <p class="more-login_label"><span>{{"OR"|translate}}</span></p>
+	                            </div>
+	                            <div>
+	                            	<button id="gSignInBtn" class="social-login_btn" ng-click="do_external_OAuth(&apos;google&apos;)">
+		                                <svg class="google_svg" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+		                                    <path d="M14.1284 6.77594H13.625V6.75H8V9.25H11.5322C11.0169 10.7053 9.63219 11.75 8 11.75C5.92906 11.75 4.25 10.0709 4.25 8C4.25 5.92906 5.92906 4.25 8 4.25C8.95594 4.25 9.82563 4.61062 10.4878 5.19969L12.2556 3.43187C11.1394 2.39156 9.64625 1.75 8 1.75C4.54844 1.75 1.75 4.54844 1.75 8C1.75 11.4516 4.54844 14.25 8 14.25C11.4516 14.25 14.25 11.4516 14.25 8C14.25 7.58094 14.2069 7.17188 14.1284 6.77594Z" fill="#FFC107"></path>
+		                                    <path d="M2.4707 5.09094L4.52414 6.59688C5.07977 5.22125 6.42539 4.25 8.00008 4.25C8.95602 4.25 9.8257 4.61062 10.4879 5.19969L12.2557 3.43187C11.1395 2.39156 9.64633 1.75 8.00008 1.75C5.59945 1.75 3.51758 3.10531 2.4707 5.09094Z" fill="#FF3D00"></path>
+		                                    <path d="M8.0001 14.25C9.61447 14.25 11.0813 13.6322 12.1904 12.6275L10.256 10.9906C9.60746 11.4838 8.81493 11.7506 8.0001 11.75C6.37447 11.75 4.99416 10.7134 4.47416 9.26685L2.43604 10.8372C3.47041 12.8612 5.57104 14.25 8.0001 14.25Z" fill="#4CAF50"></path>
+		                                    <path d="M14.1284 6.77594H13.625V6.75H8V9.25H11.5322C11.2857 9.94263 10.8417 10.5479 10.255 10.9909L10.2559 10.9903L12.1903 12.6272C12.0534 12.7516 14.25 11.125 14.25 8C14.25 7.58094 14.2069 7.17188 14.1284 6.77594Z" fill="#1976D2"></path>
+		                                </svg>{{"CONTINUE_WITH_GOOGLE"|translate}}</button>
+	                            	<a href="javascript:void(0);" id="gSignInAnchorTag" style="display: none;"></a>
+	                            </div>
+	                            <button class="social-login_btn" ng-if="!showKeycloakLogin" ng-click="do_external_OAuth(&apos;microsoft&apos;)">
+	                                <svg class="google_svg" viewBox="0 0 15 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+	                                    <path d="M7 8H1V2H7V8Z" fill="#F1511B"></path>
+	                                    <path d="M14 8H8V2H14V8Z" fill="#80CC28"></path>
+	                                    <path d="M7 15H1V9H7V15Z" fill="#00ADEF"></path>
+	                                    <path d="M14 15H8V9H14V15Z" fill="#FBBC09"></path>
+	                                </svg>{{"CONTINUE_WITH_MICROSOFT"|translate}}</button>
+	                            <div class="user-account_down">
+	                                <p class="more-login_label"></p>
+	                            </div>
+								<div>
+									<p class="camu-cont_label">{{"GET_CAMU_APP"|translate}}</p>
+									   <div class="app-login">
+										<div class="app-user_btn">
+											<a href="https://play.google.com/store/apps/details?id=com.octoze.camuapp" target="_blank"><img src="assets/img/android.png" alt="android-logo"></a>
+										</div>
+										<div class="app-user_btn">
+											<a href="https://apps.apple.com/in/app/camu-staff-app/id979061549" target="_blank"><img src="assets/img/IOS.png" alt="ios-logo"></a>
+		
+										</div>
+									</div>
+								</div>
+	                            <p class="enterprise-login" ng-click="do_external_OAuth(&apos;keycloak&apos;)" ng-if="showKeycloakLogin">
+	                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+	                                    <path d="M20 7H4C2.89543 7 2 7.89543 2 9V19C2 20.1046 2.89543 21 4 21H20C21.1046 21 22 20.1046 22 19V9C22 7.89543 21.1046 7 20 7Z" stroke="#0D9BE1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+	                                    <path d="M16 21V5C16 4.46957 15.7893 3.96086 15.4142 3.58579C15.0391 3.21071 14.5304 3 14 3H10C9.46957 3 8.96086 3.21071 8.58579 3.58579C8.21071 3.96086 8 4.46957 8 5V21" stroke="#0D9BE1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+	                                </svg>
+	                                <span>{{"LOGIN_WITH_ENTERPRISE_ACCOUNT"|translate}}</span>
+	                            </p>
+	                            <p class="terms-cont_label">{{"BY_LOGGING_IN,_YOU_AGREE_TO_OUR"|translate}}<span><a href="https://camudigitalcampus.com/terms-conditions" target="_blank">{{"TERMS_OF_USE"|translate}}</a></span>{{"AND_TO_RECEIVE_CAMU_EMAILS_&_UPDATES_AND_ACKNOWLEDGE_THAT_YOU_READ_OUR"|translate}}<span><a href="https://camudigitalcampus.com/privacy-policy" target="_blank">{{"PRIVACY_POLICY."|translate}}</a></span></p>
+	                            <p class="rights-cont_label">{{"2022_©_OCTOZE_TECHNOLOGIES._ALL_RIGHTS_RESERVED."|translate}}</p>
+	                            <p class="rights-cont_label"><span><a class="camu_link_url" href="https://camudigitalcampus.com" target="_blank"> {{"companyWebsiteV2" | translate}} </a></span></p>
+	                        </div>
+	                        </form>
+				
+						   </div>
+                        </div>
+                    </div>
+                    <!-- <div class="chat-user_cont">
+                        <svg width="68" height="68" viewBox="0 0 68 68" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g filter="url(#filter0_d_8895_107153)">
+                            <circle cx="34" cy="30" r="30" fill="#0D9BE1"/>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M20.327 15.638C20 16.2798 20 17.1198 20 18.8V38.2C20 39.8802 20 40.7202 20.327 41.362C20.6146 41.9265 21.0735 42.3854 21.638 42.673C22.2798 43 23.1198 43 24.8 43H40.0148C40.3827 43 40.5667 43 40.7477 43.0221C40.9086 43.0417 41.0676 43.0744 41.2232 43.1197C41.3983 43.1707 41.5674 43.2432 41.9056 43.3881L48 46V43V18.8C48 17.1198 48 16.2798 47.673 15.638C47.3854 15.0735 46.9265 14.6146 46.362 14.327C45.7202 14 44.8802 14 43.2 14H24.8C23.1198 14 22.2798 14 21.638 14.327C21.0735 14.6146 20.6146 15.0735 20.327 15.638ZM24.303 35.2166C24.3423 35.2535 24.4314 35.3371 24.4821 35.3815C24.5936 35.479 24.7537 35.6122 24.9625 35.7687C25.38 36.0818 25.9933 36.4897 26.8028 36.8944C28.4251 37.7056 30.8272 38.5 34 38.5C37.1728 38.5 39.5749 37.7056 41.1972 36.8944C42.0067 36.4897 42.62 36.0818 43.0375 35.7687C43.2463 35.6122 43.4064 35.479 43.5179 35.3815L43.7071 35.2071C44.0976 34.8166 44.0976 34.1834 43.7071 33.7929C43.3168 33.4026 42.6841 33.4024 42.2936 33.7922L42.2009 33.8763C42.1248 33.9429 42.0037 34.0441 41.8375 34.1687C41.505 34.4182 40.9933 34.7603 40.3028 35.1056C38.9251 35.7944 36.8272 36.5 34 36.5C31.1728 36.5 29.0749 35.7944 27.6972 35.1056C27.0067 34.7603 26.495 34.4182 26.1625 34.1687C25.9963 34.0441 25.8752 33.9429 25.7991 33.8763L25.7046 33.7904C25.3138 33.403 24.6824 33.4034 24.2929 33.7929C23.9024 34.1834 23.9024 34.8166 24.2929 35.2071L24.303 35.2166Z" fill="white"/>
+                        </g>
+                        <defs>
+                            <filter id="filter0_d_8895_107153" x="0" y="0" width="68" height="68" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                                <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                                <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                                <feOffset dy="4"/>
+                                <feGaussianBlur stdDeviation="2"/>
+                                <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.05 0"/>
+                                <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_8895_107153"/>
+                                <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_8895_107153" result="shape"/>
+                            </filter>
+                        </defs>
+                        </svg>
+                    </div> -->
+                </div>
+            </div>
+            <div id="forgot-box" class="login-details mainblock">
+                <div class="product-details">
+                    <img src="assets/img/camulogov2.png" alt="product-logo" class="product-logo_img">
+                </div>
+                <div class="account-cont" ng-hide="isPwdRstSucess" ng-style="{&apos;background-image&apos;: instData.bgURL ? &apos;url(&apos; + instData.bgURL + &apos;)&apos; : &apos;url(&apos; + &apos;assets/img/LoginBG.jpg&apos; + &apos;)&apos; }">
+				  <div class="login-banner_block">
+                    <div class="password-label">
+                        <p class="reset-password_label">{{"RESET_PASSWORD"|translate}}</p>
+                        <p class="email-reset_label">{{"ENTER_YOUR_USER_NAME_TO_RESET_YOUR_PASSWORD._YOU_WILL_RECEIVE_AN_INSTRUCTION_TO_THE_EMAIL_ID_ASSOCIATED_WITH_THE_USER_NAME._IF_YOU_ARE_EXPERIENCING_PROBLEMS_RESETTING_YOUR_PASSWORD"|translate}}<span><a class="mailto" href="mailto:support@octoze.com" target="_blank">{{"SEND_US_AN_EMAIL"|translate}}</a></span></p>
+                    </div>
+                    <div class="email-validated_cont">
+                    	<form autocomplete="off" name="forgotForm" id="forgotForm">
+	                        <div class="input-box_cont">
+	                            <div class="form-group">
+		                            <label for="userid" class="input-label_cont">{{"USER_NAME"|translate}}</label>
+		                            <input id="userid" name="userid" type="text" class="input-form_cont form-control" ng-model="login.u" ng-change="clearError()" required="required">
+		                            <div class="warning-error_input" ng-show="forgotForm.userid.$dirty &amp;&amp; forgotForm.userid.$error.required">
+	                                	<svg width="28" height="28" viewBox="0 0 12 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+											<path d="M3.93 5H8.07L11 7.93V12.07L8.07 15H3.93L1 12.07V7.93L3.93 5Z" stroke="#F24B6B" stroke-linecap="round" stroke-linejoin="round"></path>
+											<path d="M6 8V10" stroke="#F24B6B" stroke-linecap="round" stroke-linejoin="round"></path>
+											<path d="M6 12H6.00596" stroke="#F24B6B" stroke-linecap="round" stroke-linejoin="round"></path>
+										</svg>
+										<p class="warning-error_label">{{"USERNAME_REQUIRED!"|translate}}</p>
+									</div>
+	                            </div>
+	                        </div>
+                        </form>
+                        <div class="warning-error" ng-show="login.error">
+                         	<div class="warning-error_reset">
+                         		<svg width="28" height="28" viewBox="0 0 12 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<path d="M3.93 5H8.07L11 7.93V12.07L8.07 15H3.93L1 12.07V7.93L3.93 5Z" stroke="#F24B6B" stroke-linecap="round" stroke-linejoin="round"></path>
+									<path d="M6 8V10" stroke="#F24B6B" stroke-linecap="round" stroke-linejoin="round"></path>
+									<path d="M6 12H6.00596" stroke="#F24B6B" stroke-linecap="round" stroke-linejoin="round"></path>
+								</svg>
+								<p class="warning-error_label">{{login.error}}</p>
+							</div>
+                        </div>
+                        <button class="login-btn" ng-click="doPasswordReset()">{{"SEND_RESET_LINK"|translate}}</button>
+                        <p class="option-view_label" ng-click="clearError()" onclick="show_box(&apos;login-box&apos;)">
+                            <span>
+	                            <svg width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+	                                <path d="M12.6663 8H3.33301" stroke="#0D9BE1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+	                                <path d="M7.99967 12.6666L3.33301 7.99992L7.99967 3.33325" stroke="#0D9BE1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+	                            </svg>
+                            </span>{{"ALL_LOGIN_OPTIONS"|translate}}</p>
+                    </div>
+				    </div>
+                  </div>
+				  <div class="account-cont" ng-show="isPwdRstSucess" ng-style="{&apos;background-image&apos;: instData.bgURL ? &apos;url(&apos; + instData.bgURL + &apos;)&apos; : &apos;url(&apos; + &apos;assets/img/LoginBG.jpg&apos; + &apos;)&apos; }">
+                    <div class="login-banner_block">
+                        <div class="password-label">
+                            <p class="reset-password_label">{{"EMAIL_SENT"|translate}}</p>
+                            <p class="email-reset_label">{{"CHECK_YOUR_INBOX_FOR_INSTRUCTIONS_TO_RESET_YOUR_PASSWORD."|translate}}</p>
+                        </div>
+                        <p class="option-view_label" ng-click="clearError()" onclick="show_box(&apos;login-box&apos;)">
+                            <span>
+                                <svg width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12.6663 8H3.33301" stroke="#0D9BE1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                <path d="M7.99967 12.6666L3.33301 7.99992L7.99967 3.33325" stroke="#0D9BE1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                </svg>
+                            </span>{{"ALL_LOGIN_OPTIONS"|translate}}</p>
+                    </div>
+             	</div>
+                </div>
+               
+        	</div>
+        <!-- loading bar modal -->
+        <div id="loginLoadingView" class="login-loading-container">
+            <div class="lds-roller">
+                <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+            </div>
+        </div>
+        <!-- loading bar modal ends -->
+        
+        <script src="/assets/js/login_vendor.min.js?v=15917"></script>
+
+        
+        
+        <script src="/app/login_combined.min.js?v=15917"></script>
+
+        <script src="https://apis.google.com/js/api:client.js" async></script>
+        <script type="text/javascript">
+            function show_box(id) {
+				document.getElementsByClassName('mainblock')[0].classList.remove('visible');
+				if(document.getElementsByClassName('visible')[0])
+
+					document.getElementsByClassName('visible')[0].classList.remove('visible');
+
+
+				document.getElementById(id).classList.add('visible');
+			}
+            document.addEventListener("DOMContentLoaded", function(event) {
+                window.history.pushState(null, "", window.location.href);        
+                window.onpopstate = function() {
+                    window.history.pushState(null, "", window.location.href);
+                }
+            });
+			function show_hide_password(show_hide_id){
+				if(show_hide_id == 'show'){
+					document.getElementById('pwd').type = 'text';
+					document.getElementById("password_hide").classList.add('visible');
+					document.getElementById("password_hide").classList.remove('hidden');
+					document.getElementById("password_show").classList.add('hidden');
+					document.getElementById("password_show").classList.remove('visible');
+				}else{
+					document.getElementById('pwd').type = 'password';
+					document.getElementById("password_show").classList.add('visible');
+					document.getElementById("password_show").classList.remove('hidden');
+					document.getElementById("password_hide").classList.add('hidden');
+					document.getElementById("password_hide").classList.remove('visible');
+				}
+			}
+        </script>
+    </body>
+</html>
